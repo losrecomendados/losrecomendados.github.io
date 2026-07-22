@@ -637,6 +637,13 @@
             background: rgba(255, 0, 0, 0.1);
         }
 
+        .upload-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
         /* Modal Styles */
         .modal {
             display: none;
@@ -782,8 +789,81 @@
                 padding: 2rem 1rem;
             }
 
-            #upload .card-panel-grid {
+            .upload-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .main-content {
+                padding: 1.5rem 1rem;
+            }
+
+            .home-section h1 {
+                font-size: 1.8em;
+            }
+
+            .portfolio-section h2,
+            .upload-section h2 {
+                font-size: 1.8em;
+            }
+
+            .card-panel {
+                padding: 1rem;
+            }
+
+            .featured-iframe-container {
+                height: 300px;
+            }
+
+            .featured-project h3 {
+                font-size: 1.2em;
+            }
+
+            .about-content h2 {
+                font-size: 1.5em;
+            }
+
+            .skills-list {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .dropdown-content {
+                min-width: 160px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .skills-list {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                gap: 0.3rem;
+            }
+
+            .nav-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 0.85em;
+            }
+
+            .auth-btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85em;
             }
         }
     </style>
@@ -934,7 +1014,7 @@
         <div id="upload" class="page upload-section" style="display: none;">
             <h2>Asset Manager</h2>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+            <div class="upload-grid">
                 <!-- Left: Clients -->
                 <div>
                     <div class="card-panel">

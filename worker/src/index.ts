@@ -72,30 +72,38 @@ export default {
 
     // GitHub OAuth token exchange (no auth required)
     if (path === '/api/auth/github' && method === 'POST') {
-      const body = await request.json<{ code: string }>();
-      if (!body.code) return json({ error: 'Missing code' }, 400);
+      try {
+        const body = await request.json<{ code: string }>();
+        if (!body.code) return json({ error: 'Missing code' }, 400);
 
-      const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          client_id: env.GITHUB_CLIENT_ID,
-          client_secret: env.GITHUB_CLIENT_SECRET,
-          code: body.code,
-        }),
-      });
+        if (!env.GITHUB_CLIENT_SECRET) {
+          return json({ error: 'GitHub client secret not configured' }, 500);
+        }
 
-      const tokenData = await tokenRes.json<{ access_token?: string; error?: string }>();
-      if (!tokenData.access_token) {
-        return json({ error: tokenData.error || 'Token exchange failed' }, 401);
+        const tokenRes = await fetch('https://github.com/login/oauth/access_token', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            client_id: env.GITHUB_CLIENT_ID,
+            client_secret: env.GITHUB_CLIENT_SECRET,
+            code: body.code,
+          }),
+        });
+
+        const tokenData = await tokenRes.json<{ access_token?: string; error?: string }>();
+        if (!tokenData.access_token) {
+          return json({ error: tokenData.error || 'Token exchange failed' }, 401);
+        }
+
+        const userRes = await fetch('https://api.github.com/user', {
+          headers: { Authorization: `Bearer ${tokenData.access_token}`, Accept: 'application/vnd.github+json' },
+        });
+        const user = await userRes.json<{ login: string; avatar_url: string; id: number }>();
+
+        return json({ access_token: tokenData.access_token, user });
+      } catch (err) {
+        return json({ error: err instanceof Error ? err.message : 'Auth failed' }, 500);
       }
-
-      const userRes = await fetch('https://api.github.com/user', {
-        headers: { Authorization: `Bearer ${tokenData.access_token}`, Accept: 'application/vnd.github+json' },
-      });
-      const user = await userRes.json<{ login: string; avatar_url: string; id: number }>();
-
-      return json({ access_token: tokenData.access_token, user });
     }
 
     // All /api routes require auth
