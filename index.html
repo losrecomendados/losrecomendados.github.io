@@ -65,6 +65,12 @@
             transform: scale(1.05);
         }
 
+        .header-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
         nav {
             display: flex;
             gap: 1rem;
@@ -98,6 +104,84 @@
             color: #000000;
         }
 
+        .auth-btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95em;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .auth-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: #1a1a1a;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-content.active {
+            display: block;
+        }
+
+        .dropdown-item {
+            color: #ffffff;
+            padding: 0.8rem 1rem;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
         /* Main Content */
         .main-content {
             flex: 1;
@@ -125,6 +209,48 @@
 
         .page.active {
             display: block;
+        }
+
+        /* Auth Page */
+        .auth-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+        }
+
+        .auth-container {
+            text-align: center;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .auth-container h2 {
+            margin-bottom: 2rem;
+            font-size: 2em;
+        }
+
+        .github-login-btn {
+            background: #ffffff;
+            color: #000000;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .github-login-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
         }
 
         /* Home Page */
@@ -193,7 +319,6 @@
             color: #ffffff;
         }
 
-        /* Featured Project */
         .featured-project {
             margin-bottom: 3rem;
         }
@@ -220,7 +345,6 @@
             border: none;
         }
 
-        /* Portfolio Grid */
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -324,6 +448,88 @@
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
         }
 
+        /* Upload Page */
+        .upload-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 2rem;
+            color: #ffffff;
+        }
+
+        .drop-zone {
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            padding: 3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.02);
+            margin-bottom: 2rem;
+        }
+
+        .drop-zone:hover,
+        .drop-zone.dragover {
+            border-color: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .drop-zone i {
+            font-size: 3em;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .drop-zone p {
+            color: #cccccc;
+            margin-bottom: 1rem;
+        }
+
+        .drop-zone input[type="file"] {
+            display: none;
+        }
+
+        .upload-list {
+            margin-top: 2rem;
+        }
+
+        .upload-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .upload-item-info {
+            text-align: left;
+        }
+
+        .upload-item-name {
+            color: #ffffff;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-item-status {
+            color: #aaaaaa;
+            font-size: 0.9em;
+        }
+
+        .upload-item-status.uploading {
+            color: #ffaa00;
+        }
+
+        .upload-item-status.success {
+            color: #00ff00;
+        }
+
+        .upload-item-status.error {
+            color: #ff0000;
+        }
+
         /* Modal Styles */
         .modal {
             display: none;
@@ -385,25 +591,6 @@
         .close-btn:hover {
             color: #ff0000;
             transform: rotate(90deg);
-        }
-
-        .iframe-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-        }
-
-        .iframe-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
         }
 
         /* About Page */
@@ -483,6 +670,10 @@
                 max-width: 95%;
                 padding: 1rem;
             }
+
+            .drop-zone {
+                padding: 2rem 1rem;
+            }
         }
     </style>
 </head>
@@ -491,22 +682,55 @@
     <header>
         <div class="header-content">
             <a href="#" class="logo" onclick="navigateTo('home'); return false;">Los Recomendados</a>
-            <nav>
-                <button class="nav-btn active" onclick="navigateTo('home'); return false;" title="Home">
-                    <i class="fas fa-home"></i>
-                </button>
-                <button class="nav-btn" onclick="navigateTo('portfolio'); return false;" title="Portfolio">
-                    <i class="fas fa-briefcase"></i>
-                </button>
-                <button class="nav-btn" onclick="navigateTo('about'); return false;" title="About">
-                    <i class="fas fa-user"></i>
-                </button>
-            </nav>
+            <div class="header-right">
+                <nav>
+                    <button class="nav-btn active" onclick="navigateTo('home'); return false;" title="Home">
+                        <i class="fas fa-home"></i>
+                    </button>
+                    <button class="nav-btn" onclick="navigateTo('portfolio'); return false;" title="Portfolio">
+                        <i class="fas fa-briefcase"></i>
+                    </button>
+                    <button class="nav-btn" id="upload-nav" style="display: none;" onclick="navigateTo('upload'); return false;" title="Upload">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </button>
+                    <button class="nav-btn" onclick="navigateTo('about'); return false;" title="About">
+                        <i class="fas fa-user"></i>
+                    </button>
+                </nav>
+                <div id="auth-container">
+                    <button class="auth-btn" onclick="loginWithGitHub()">
+                        <i class="fab fa-github"></i>
+                        Sign in
+                    </button>
+                </div>
+                <div id="user-menu" class="dropdown" style="display: none;">
+                    <img id="user-avatar" class="user-avatar" alt="User avatar">
+                    <div class="dropdown-content">
+                        <div class="dropdown-item" id="user-name"></div>
+                        <hr style="border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 0.5rem 0;">
+                        <button class="dropdown-item" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Sign out
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
     <!-- Main Content -->
     <div class="main-content">
+        <!-- Auth Page -->
+        <div id="auth" class="page auth-page" style="display: none;">
+            <div class="auth-container">
+                <h2>Sign in Required</h2>
+                <p style="color: #aaaaaa; margin-bottom: 2rem;">Sign in with your GitHub account to access org features</p>
+                <button class="github-login-btn" onclick="loginWithGitHub()">
+                    <i class="fab fa-github"></i>
+                    Sign in with GitHub
+                </button>
+            </div>
+        </div>
+
         <!-- Home Page -->
         <div id="home" class="page active home-section">
             <h1>Los Recomendados</h1>
@@ -527,7 +751,6 @@
         <div id="portfolio" class="page portfolio-section">
             <h2>Portfolio</h2>
             
-            <!-- Featured Project -->
             <div class="featured-project">
                 <h3>Tecnicelu Store</h3>
                 <p style="color: #cccccc; margin-bottom: 1rem;">Modern e-commerce platform with sleek design and smooth user experience.</p>
@@ -541,7 +764,6 @@
                 </div>
             </div>
 
-            <!-- Other Projects Grid -->
             <h3 style="color: #ffffff; margin-top: 3rem; margin-bottom: 2rem; font-size: 1.5em;">Other Projects</h3>
             
             <div class="portfolio-grid">
@@ -553,7 +775,6 @@
                         <span class="tech-tag">Node.js</span>
                         <span class="tech-tag">MongoDB</span>
                     </div>
-                    <button class="view-demo-btn" onclick="openModal('modal-project2')">View Demo</button>
                 </div>
 
                 <div class="portfolio-card">
@@ -564,7 +785,6 @@
                         <span class="tech-tag">Flask</span>
                         <span class="tech-tag">PostgreSQL</span>
                     </div>
-                    <button class="view-demo-btn" onclick="openModal('modal-project3')">View Demo</button>
                 </div>
 
                 <div class="portfolio-card">
@@ -575,7 +795,6 @@
                         <span class="tech-tag">Firebase</span>
                         <span class="tech-tag">Redux</span>
                     </div>
-                    <button class="view-demo-btn" onclick="openModal('modal-project4')">View Demo</button>
                 </div>
 
                 <div class="portfolio-card">
@@ -586,7 +805,6 @@
                         <span class="tech-tag">Vue.js</span>
                         <span class="tech-tag">APIs</span>
                     </div>
-                    <button class="view-demo-btn" onclick="openModal('modal-project5')">View Demo</button>
                 </div>
 
                 <div class="portfolio-card">
@@ -597,9 +815,23 @@
                         <span class="tech-tag">AWS</span>
                         <span class="tech-tag">Docker</span>
                     </div>
-                    <button class="view-demo-btn" onclick="openModal('modal-project6')">View Demo</button>
                 </div>
             </div>
+        </div>
+
+        <!-- Upload Page (Members Only) -->
+        <div id="upload" class="page upload-section" style="display: none;">
+            <h2>Upload Assets</h2>
+            <p style="color: #aaaaaa; margin-bottom: 2rem;">Drag and drop files to upload, or click to browse</p>
+            
+            <div class="drop-zone" id="dropZone">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Drag files here or click to upload</p>
+                <small style="color: #666666;">Supported: Images, Videos, Documents</small>
+                <input type="file" id="fileInput" multiple>
+            </div>
+
+            <div class="upload-list" id="uploadList"></div>
         </div>
 
         <!-- About Page -->
@@ -627,73 +859,87 @@
         </div>
     </div>
 
-    <!-- Modals for Portfolio Projects -->
-    <div id="modal-project2" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Project Two</h2>
-                <button class="close-btn" onclick="closeModal('modal-project2')">&times;</button>
-            </div>
-            <p style="color: #cccccc;">Full-stack application demo coming soon...</p>
-        </div>
-    </div>
-
-    <div id="modal-project3" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Project Three</h2>
-                <button class="close-btn" onclick="closeModal('modal-project3')">&times;</button>
-            </div>
-            <p style="color: #cccccc;">Project demo coming soon...</p>
-        </div>
-    </div>
-
-    <div id="modal-project4" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Project Four</h2>
-                <button class="close-btn" onclick="closeModal('modal-project4')">&times;</button>
-            </div>
-            <p style="color: #cccccc;">Mobile app demo coming soon...</p>
-        </div>
-    </div>
-
-    <div id="modal-project5" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Project Five</h2>
-                <button class="close-btn" onclick="closeModal('modal-project5')">&times;</button>
-            </div>
-            <p style="color: #cccccc;">Data visualization demo coming soon...</p>
-        </div>
-    </div>
-
-    <div id="modal-project6" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Project Six</h2>
-                <button class="close-btn" onclick="closeModal('modal-project6')">&times;</button>
-            </div>
-            <p style="color: #cccccc;">Enterprise application demo coming soon...</p>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer>
         <p>&copy; 2024 Los Recomendados. All rights reserved.</p>
     </footer>
 
     <script>
+        // GitHub OAuth Configuration
+        const GITHUB_CLIENT_ID = 'YOUR_GITHUB_CLIENT_ID';
+        const GITHUB_REDIRECT_URI = window.location.origin + '/callback.html';
+        const ORG_NAME = 'your-org-name'; // Change this to your org name
+
+        // Check for auth on page load
+        window.addEventListener('load', function() {
+            checkAuth();
+            setupDropZone();
+        });
+
+        function loginWithGitHub() {
+            const authUrl = `https://github.com/login/oauth/authorize?client_id=${GITHUB_CLIENT_ID}&redirect_uri=${encodeURIComponent(GITHUB_REDIRECT_URI)}&scope=user:email,read:org`;
+            window.location.href = authUrl;
+        }
+
+        function checkAuth() {
+            const token = localStorage.getItem('github_token');
+            const user = localStorage.getItem('github_user');
+
+            if (token && user) {
+                const userData = JSON.parse(user);
+                showUserLoggedIn(userData);
+            } else {
+                showUserLoggedOut();
+            }
+        }
+
+        function showUserLoggedIn(userData) {
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('user-menu').style.display = 'block';
+            document.getElementById('user-avatar').src = userData.avatar_url;
+            document.getElementById('user-name').innerHTML = `<strong>${userData.login}</strong>`;
+            document.getElementById('upload-nav').style.display = 'flex';
+
+            // Make user menu dropdown clickable
+            document.getElementById('user-avatar').addEventListener('click', toggleDropdown);
+        }
+
+        function showUserLoggedOut() {
+            document.getElementById('auth-container').style.display = 'block';
+            document.getElementById('user-menu').style.display = 'none';
+            document.getElementById('upload-nav').style.display = 'none';
+        }
+
+        function toggleDropdown() {
+            const dropdown = document.querySelector('.dropdown-content');
+            dropdown.classList.toggle('active');
+        }
+
+        function logout() {
+            localStorage.removeItem('github_token');
+            localStorage.removeItem('github_user');
+            showUserLoggedOut();
+            navigateTo('home');
+        }
+
         function navigateTo(page) {
+            const token = localStorage.getItem('github_token');
+
+            // Check if trying to access upload without auth
+            if (page === 'upload' && !token) {
+                navigateTo('auth');
+                return;
+            }
+
             // Update active nav button
             const navBtns = document.querySelectorAll('.nav-btn');
             navBtns.forEach(btn => btn.classList.remove('active'));
             
-            // Find and activate the correct button
             const pageToIcon = {
                 'home': 0,
                 'portfolio': 1,
-                'about': 2
+                'upload': 2,
+                'about': document.getElementById('upload-nav').style.display === 'none' ? 2 : 3
             };
             
             if (pageToIcon[page] !== undefined) {
@@ -705,29 +951,73 @@
             pages.forEach(p => p.classList.remove('active'));
             
             // Show selected page
-            document.getElementById(page).classList.add('active');
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
-
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close modal when clicking outside the content
-        window.addEventListener('click', function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.classList.remove('active');
-                document.body.style.overflow = 'auto';
+            const pageEl = document.getElementById(page);
+            if (pageEl) {
+                pageEl.classList.add('active');
             }
-        });
+            
+            window.scrollTo(0, 0);
+            
+            // Close dropdown
+            document.querySelector('.dropdown-content').classList.remove('active');
+        }
+
+        function setupDropZone() {
+            const dropZone = document.getElementById('dropZone');
+            const fileInput = document.getElementById('fileInput');
+
+            dropZone.addEventListener('click', () => fileInput.click());
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('dragover');
+            });
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('dragover');
+            });
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+                handleFiles(e.dataTransfer.files);
+            });
+
+            fileInput.addEventListener('change', (e) => {
+                handleFiles(e.target.files);
+            });
+        }
+
+        function handleFiles(files) {
+            const uploadList = document.getElementById('uploadList');
+            
+            for (let file of files) {
+                const uploadItem = document.createElement('div');
+                uploadItem.className = 'upload-item';
+                uploadItem.innerHTML = `
+                    <div class="upload-item-info">
+                        <div class="upload-item-name"><i class="fas fa-file"></i> ${file.name}</div>
+                        <div class="upload-item-status uploading">Uploading... ${(file.size / 1024 / 1024).toFixed(2)} MB</div>
+                    </div>
+                `;
+                uploadList.appendChild(uploadItem);
+
+                // Simulate upload (replace with actual Supabase/Cloudflare upload)
+                setTimeout(() => {
+                    uploadItem.querySelector('.upload-item-status').textContent = '✓ Uploaded successfully';
+                    uploadItem.querySelector('.upload-item-status').className = 'upload-item-status success';
+                }, 2000);
+            }
+        }
+
+        // Handle OAuth callback
+        function handleAuthCallback(code) {
+            // This would typically be handled by your backend
+            // For now, we'll store a mock token
+            localStorage.setItem('github_token', code);
+            localStorage.setItem('github_user', JSON.stringify({
+                login: 'user',
+                avatar_url: 'https://api.github.com/users/github/avatar_url'
+            }));
+            checkAuth();
+        }
     </script>
 </body>
 </html>
