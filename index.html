@@ -866,9 +866,9 @@
 
     <script>
         // GitHub OAuth Configuration
-        const GITHUB_CLIENT_ID = 'YOUR_GITHUB_CLIENT_ID';
-        const GITHUB_REDIRECT_URI = window.location.origin + '/callback.html';
-        const ORG_NAME = 'your-org-name'; // Change this to your org name
+        const GITHUB_CLIENT_ID = 'Ov23liDvoSmJc8OtnSzL';
+        const GITHUB_REDIRECT_URI = window.location.origin + '/losrecomendados.github.io/callback.html';
+        const ORG_NAME = 'losrecomendados';
 
         // Check for auth on page load
         window.addEventListener('load', function() {
@@ -966,6 +966,8 @@
             const dropZone = document.getElementById('dropZone');
             const fileInput = document.getElementById('fileInput');
 
+            if (!dropZone || !fileInput) return;
+
             dropZone.addEventListener('click', () => fileInput.click());
             dropZone.addEventListener('dragover', (e) => {
                 e.preventDefault();
@@ -1008,15 +1010,19 @@
         }
 
         // Handle OAuth callback
-        function handleAuthCallback(code) {
-            // This would typically be handled by your backend
-            // For now, we'll store a mock token
-            localStorage.setItem('github_token', code);
-            localStorage.setItem('github_user', JSON.stringify({
+        function handleAuthCallback(code, state) {
+            // Store the code for backend exchange
+            localStorage.setItem('github_code', code);
+            // In a real app, send this code to your backend to exchange for a token
+            // For now, mock the user data
+            const mockUser = {
                 login: 'user',
-                avatar_url: 'https://api.github.com/users/github/avatar_url'
-            }));
+                avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4'
+            };
+            localStorage.setItem('github_token', code);
+            localStorage.setItem('github_user', JSON.stringify(mockUser));
             checkAuth();
+            navigateTo('home');
         }
     </script>
 </body>
