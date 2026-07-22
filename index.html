@@ -190,6 +190,43 @@
             color: #cccccc;
         }
 
+        /* Portfolio Page */
+        .portfolio-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Featured Project */
+        .featured-project {
+            margin-bottom: 3rem;
+        }
+
+        .featured-project h3 {
+            color: #00d4ff;
+            font-size: 1.5em;
+            margin-bottom: 1rem;
+        }
+
+        .featured-iframe-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            overflow: hidden;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .featured-iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
         /* Portfolio Grid */
         .portfolio-grid {
             display: grid;
@@ -444,6 +481,10 @@
                 grid-template-columns: 1fr;
             }
 
+            .featured-iframe-container {
+                height: 400px;
+            }
+
             .modal-content {
                 max-width: 95%;
                 padding: 1rem;
@@ -489,21 +530,27 @@
         </div>
 
         <!-- Portfolio Page -->
-        <div id="portfolio" class="page">
-            <h2 style="font-size: 2.5em; margin-bottom: 2rem; background: linear-gradient(135deg, #00d4ff, #0099ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Portfolio</h2>
+        <div id="portfolio" class="page portfolio-section">
+            <h2>Portfolio</h2>
+            
+            <!-- Featured Project -->
+            <div class="featured-project">
+                <h3>Tecnicelu Store</h3>
+                <p style="color: #cccccc; margin-bottom: 1rem;">Modern e-commerce platform with sleek design and smooth user experience.</p>
+                <div class="tech" style="justify-content: flex-start; margin-bottom: 1rem;">
+                    <span class="tech-tag">HTML</span>
+                    <span class="tech-tag">CSS</span>
+                    <span class="tech-tag">JavaScript</span>
+                </div>
+                <div class="featured-iframe-container">
+                    <iframe src="https://tecnicelu.store" frameborder="0"></iframe>
+                </div>
+            </div>
+
+            <!-- Other Projects Grid -->
+            <h3 style="color: #00d4ff; margin-top: 3rem; margin-bottom: 2rem; font-size: 1.5em;">Other Projects</h3>
             
             <div class="portfolio-grid">
-                <div class="portfolio-card">
-                    <h3>Tecnicelu Store</h3>
-                    <p>Modern e-commerce platform with sleek design and smooth user experience.</p>
-                    <div class="tech">
-                        <span class="tech-tag">HTML</span>
-                        <span class="tech-tag">CSS</span>
-                        <span class="tech-tag">JavaScript</span>
-                    </div>
-                    <button class="view-demo-btn" onclick="openModal('modal-tecnicelu')">View Demo</button>
-                </div>
-
                 <div class="portfolio-card">
                     <h3>Project Two</h3>
                     <p>A full-stack application built with cutting-edge technologies for optimal performance and user experience.</p>
@@ -587,19 +634,6 @@
     </div>
 
     <!-- Modals for Portfolio Projects -->
-    <div id="modal-tecnicelu" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Tecnicelu Store</h2>
-                <button class="close-btn" onclick="closeModal('modal-tecnicelu')">&times;</button>
-            </div>
-            <div class="iframe-container">
-                <iframe src="https://tecnicelu.store" frameborder="0" allowfullscreen></iframe>
-            </div>
-            <p style="color: #cccccc; margin-top: 1rem;">Visit the live site to explore the full e-commerce experience.</p>
-        </div>
-    </div>
-
     <div id="modal-project2" class="modal">
         <div class="modal-content">
             <div class="modal-header">
