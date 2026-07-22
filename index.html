@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Los Recomendados</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='18' fill='%23000'/><text y='72' x='15' font-size='68' font-family='monospace' fill='%23fff'>&lt;/&gt;</text></svg>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -530,6 +531,109 @@
             color: #ff0000;
         }
 
+        .upload-progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .upload-progress-fill {
+            height: 100%;
+            background: #ffffff;
+            border-radius: 2px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .upload-progress-fill.error {
+            background: #ff0000;
+        }
+
+        .upload-progress-fill.success {
+            background: #00ff00;
+        }
+
+        .retry-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+        }
+
+        .retry-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .upload-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-panel {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+
+        .client-item {
+            padding: 0.75rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.03);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .client-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .client-item.active {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .file-item a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .file-item a:hover {
+            text-decoration: underline;
+        }
+
+        .file-delete-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            color: #ff4444;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+
+        .file-delete-btn:hover {
+            background: rgba(255, 0, 0, 0.1);
+        }
+
         /* Modal Styles */
         .modal {
             display: none;
@@ -673,6 +777,10 @@
 
             .drop-zone {
                 padding: 2rem 1rem;
+            }
+
+            #upload .card-panel-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -821,14 +929,48 @@
 
         <!-- Upload Page (Members Only) -->
         <div id="upload" class="page upload-section" style="display: none;">
-            <h2>Upload Assets</h2>
-            <p style="color: #aaaaaa; margin-bottom: 2rem;">Drag and drop files to upload, or click to browse</p>
-            
-            <div class="drop-zone" id="dropZone">
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Drag files here or click to upload</p>
-                <small style="color: #666666;">Supported: Images, Videos, Documents</small>
-                <input type="file" id="fileInput" multiple>
+            <h2>Asset Manager</h2>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1.5rem;">
+                <!-- Left: Clients -->
+                <div>
+                    <div class="card-panel">
+                        <h3 style="color: #94a3b8; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">Add Client</h3>
+                        <input type="text" id="clientName" placeholder="Client name" style="width: 100%; padding: 0.6rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: #fff; margin-bottom: 0.5rem;">
+                        <input type="email" id="clientEmail" placeholder="Contact email" style="width: 100%; padding: 0.6rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: #fff; margin-bottom: 0.5rem;">
+                        <input type="text" id="clientPhone" placeholder="Phone" style="width: 100%; padding: 0.6rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: #fff; margin-bottom: 0.5rem;">
+                        <textarea id="clientNotes" placeholder="Notes" rows="2" style="width: 100%; padding: 0.6rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: #fff; margin-bottom: 0.5rem; resize: vertical;"></textarea>
+                        <button onclick="createClient()" style="width: 100%; padding: 0.6rem; border-radius: 6px; border: none; background: #ffffff; color: #000; font-weight: 600; cursor: pointer;">Create Client</button>
+                    </div>
+
+                    <div class="card-panel" style="margin-top: 1rem;">
+                        <h3 style="color: #94a3b8; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">Clients</h3>
+                        <div id="clientList"></div>
+                    </div>
+                </div>
+
+                <!-- Right: Upload + Files -->
+                <div>
+                    <div class="card-panel">
+                        <h3 style="color: #94a3b8; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">Upload File</h3>
+                        <select id="bucketSelect" style="width: 100%; padding: 0.6rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: #fff; margin-bottom: 1rem;">
+                            <option value="client">Client Assets</option>
+                            <option value="company">Company Assets</option>
+                        </select>
+                        <div class="drop-zone" id="dropZone">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Drag files here or click to upload</p>
+                            <small style="color: #666666;">Supported: Images, Videos, Documents</small>
+                            <input type="file" id="fileInput" multiple>
+                        </div>
+                        <div id="uploadStatus" style="margin-top: 1rem;"></div>
+                    </div>
+
+                    <div class="card-panel" style="margin-top: 1rem;">
+                        <h3 style="color: #94a3b8; font-size: 0.85em; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">Files</h3>
+                        <div id="fileList"></div>
+                    </div>
+                </div>
             </div>
 
             <div class="upload-list" id="uploadList"></div>
@@ -867,7 +1009,7 @@
     <script>
         // GitHub OAuth Configuration
         const GITHUB_CLIENT_ID = 'Ov23liDvoSmJc8OtnSzL';
-        const GITHUB_REDIRECT_URI = window.location.origin + '/losrecomendados.github.io/callback.html';
+        const GITHUB_REDIRECT_URI = window.location.origin + '/callback.html';
         const ORG_NAME = 'losrecomendados';
 
         // Check for auth on page load
@@ -900,8 +1042,9 @@
             document.getElementById('user-name').innerHTML = `<strong>${userData.login}</strong>`;
             document.getElementById('upload-nav').style.display = 'flex';
 
-            // Make user menu dropdown clickable
             document.getElementById('user-avatar').addEventListener('click', toggleDropdown);
+            loadClients();
+            loadFiles();
         }
 
         function showUserLoggedOut() {
@@ -958,8 +1101,12 @@
             
             window.scrollTo(0, 0);
             
-            // Close dropdown
             document.querySelector('.dropdown-content').classList.remove('active');
+
+            if (page === 'upload') {
+                loadClients();
+                loadFiles();
+            }
         }
 
         function setupDropZone() {
@@ -985,36 +1132,225 @@
             fileInput.addEventListener('change', (e) => {
                 handleFiles(e.target.files);
             });
+
+            const bucketSelect = document.getElementById('bucketSelect');
+            if (bucketSelect) {
+                bucketSelect.addEventListener('change', loadFiles);
+            }
+        }
+
+        const WORKER_URL = 'https://losrecomendados-upload-worker.parchepaisa.workers.dev';
+        let selectedClientId = null;
+
+        function apiHeaders() {
+            return { 'Authorization': 'Bearer ' + localStorage.getItem('github_token') };
+        }
+
+        async function apiFetch(path, opts = {}) {
+            const res = await fetch(WORKER_URL + path, {
+                ...opts,
+                headers: { ...apiHeaders(), ...(opts.headers || {}) },
+            });
+            return res.json();
+        }
+
+        // ── Clients ───────────────────────────────────────
+        async function loadClients() {
+            const clients = await apiFetch('/api/clients');
+            const list = document.getElementById('clientList');
+            if (!list) return;
+            if (!clients.length) {
+                list.innerHTML = '<p style="color: #666;">No clients yet</p>';
+                return;
+            }
+            list.innerHTML = clients.map(c => `
+                <div class="client-item ${c.id === selectedClientId ? 'active' : ''}" onclick="selectClient(${c.id})">
+                    <strong>${c.name}</strong> <span style="color:#666;">/${c.slug}</span><br>
+                    <small style="color:#888;">${c.contact_email || ''} ${c.phone || ''}</small>
+                </div>
+            `).join('');
+        }
+
+        function selectClient(id) {
+            selectedClientId = id;
+            loadClients();
+            loadFiles();
+        }
+
+        async function createClient() {
+            const name = document.getElementById('clientName').value.trim();
+            if (!name) return alert('Enter a client name');
+            await apiFetch('/api/clients', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name,
+                    contact_email: document.getElementById('clientEmail').value || undefined,
+                    phone: document.getElementById('clientPhone').value || undefined,
+                    notes: document.getElementById('clientNotes').value || undefined,
+                }),
+            });
+            document.getElementById('clientName').value = '';
+            document.getElementById('clientEmail').value = '';
+            document.getElementById('clientPhone').value = '';
+            document.getElementById('clientNotes').value = '';
+            loadClients();
+        }
+
+        // ── Files ─────────────────────────────────────────
+        async function loadFiles() {
+            const bucket = document.getElementById('bucketSelect')?.value || 'client';
+            let url = `/api/files?bucket=${bucket}`;
+            if (bucket === 'client' && selectedClientId) {
+                url += `&client_id=${selectedClientId}`;
+            }
+
+            const data = await apiFetch(url);
+            const list = document.getElementById('fileList');
+            if (!list) return;
+            if (!data.objects?.length) {
+                list.innerHTML = '<p style="color: #666;">No files</p>';
+                return;
+            }
+            list.innerHTML = data.objects.map(o => {
+                const name = o.filename || o.key.split('/').pop();
+                const size = o.size < 1024 ? o.size + ' B' : o.size < 1048576 ? (o.size / 1024).toFixed(1) + ' KB' : (o.size / 1048576).toFixed(1) + ' MB';
+                return `
+                    <div class="file-item">
+                        <a href="${WORKER_URL}/api/download/${o.id}" target="_blank">${name}</a>
+                        <span>
+                            <small style="color:#666;">${size}</small>
+                            <button class="file-delete-btn" onclick="deleteFile(${o.id})">Delete</button>
+                        </span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function deleteFile(id) {
+            if (!confirm('Delete this file?')) return;
+            await apiFetch(`/api/files?id=${id}`, { method: 'DELETE' });
+            loadFiles();
+        }
+
+        // ── Upload ────────────────────────────────────────
+        function formatSize(bytes) {
+            if (bytes < 1024) return bytes + ' B';
+            if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+            return (bytes / 1024 / 1024).toFixed(2) + ' MB';
         }
 
         function handleFiles(files) {
             const uploadList = document.getElementById('uploadList');
-            
+            const status = document.getElementById('uploadStatus');
+            const bucket = document.getElementById('bucketSelect')?.value || 'client';
+            const formData = new FormData();
+
             for (let file of files) {
+                const itemId = 'upload-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
                 const uploadItem = document.createElement('div');
                 uploadItem.className = 'upload-item';
+                uploadItem.id = itemId;
                 uploadItem.innerHTML = `
                     <div class="upload-item-info">
                         <div class="upload-item-name"><i class="fas fa-file"></i> ${file.name}</div>
-                        <div class="upload-item-status uploading">Uploading... ${(file.size / 1024 / 1024).toFixed(2)} MB</div>
+                        <div class="upload-item-status uploading">Preparing... ${formatSize(file.size)}</div>
+                        <div class="upload-progress-bar"><div class="upload-progress-fill"></div></div>
                     </div>
+                    <div class="upload-item-actions"></div>
                 `;
                 uploadList.appendChild(uploadItem);
-
-                // Simulate upload (replace with actual Supabase/Cloudflare upload)
-                setTimeout(() => {
-                    uploadItem.querySelector('.upload-item-status').textContent = '✓ Uploaded successfully';
-                    uploadItem.querySelector('.upload-item-status').className = 'upload-item-status success';
-                }, 2000);
+                formData.append('files', file, file.name);
             }
+
+            formData.append('bucket', bucket);
+            if (bucket === 'client' && selectedClientId) {
+                formData.append('client_id', selectedClientId);
+            }
+
+            uploadFiles(formData, status);
+        }
+
+        function uploadFiles(formData, statusEl) {
+            const token = localStorage.getItem('github_token');
+            if (!token) return;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', WORKER_URL + '/api/upload', true);
+            xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+
+            xhr.upload.onprogress = function(e) {
+                if (e.lengthComputable) {
+                    const pct = Math.round((e.loaded / e.total) * 100);
+                    document.querySelectorAll('.upload-progress-fill').forEach(bar => {
+                        if (!bar.classList.contains('error') && !bar.classList.contains('success')) {
+                            bar.style.width = pct + '%';
+                        }
+                    });
+                    document.querySelectorAll('.upload-item-status.uploading').forEach(s => {
+                        s.textContent = 'Uploading... ' + pct + '%';
+                    });
+                }
+            };
+
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    const data = JSON.parse(xhr.responseText);
+                    data.results.forEach(result => updateUploadResult(result));
+                    if (statusEl) statusEl.textContent = 'Upload complete';
+                    loadFiles();
+                } else {
+                    document.querySelectorAll('.upload-item-status.uploading').forEach(s => {
+                        s.textContent = 'Upload failed';
+                        s.className = 'upload-item-status error';
+                    });
+                }
+            };
+
+            xhr.onerror = function() {
+                document.querySelectorAll('.upload-item-status.uploading').forEach(s => {
+                    s.textContent = 'Network error — click retry';
+                    s.className = 'upload-item-status error';
+                });
+            };
+
+            xhr.send(formData);
+        }
+
+        function updateUploadResult(result) {
+            const items = document.querySelectorAll('.upload-item');
+            let targetItem = null;
+            items.forEach(item => {
+                if (item.querySelector('.upload-item-name').textContent.includes(result.filename)) {
+                    targetItem = item;
+                }
+            });
+            if (!targetItem) return;
+
+            const status = targetItem.querySelector('.upload-item-status');
+            const bar = targetItem.querySelector('.upload-progress-fill');
+
+            const supaOk = result.supabase?.ok;
+            const r2Ok = result.r2?.ok;
+
+            if (supaOk && r2Ok) {
+                status.textContent = '✓ Supabase + R2';
+                status.className = 'upload-item-status success';
+                bar.classList.add('success');
+            } else if (supaOk || r2Ok) {
+                status.innerHTML = `✓ ${supaOk ? 'Supabase' : 'R2'} only`;
+                status.className = 'upload-item-status uploading';
+            } else {
+                status.textContent = '✗ Failed: ' + (result.supabase?.error || result.r2?.error || 'Unknown');
+                status.className = 'upload-item-status error';
+                bar.classList.add('error');
+            }
+            bar.style.width = '100%';
         }
 
         // Handle OAuth callback
         function handleAuthCallback(code, state) {
-            // Store the code for backend exchange
             localStorage.setItem('github_code', code);
-            // In a real app, send this code to your backend to exchange for a token
-            // For now, mock the user data
             const mockUser = {
                 login: 'user',
                 avatar_url: 'https://avatars.githubusercontent.com/u/1?v=4'
