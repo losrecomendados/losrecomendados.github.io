@@ -12,38 +12,166 @@
         }
 
         body {
-            background-color: #000000;
+            background: linear-gradient(135deg, #000000 0%, #1a1a2e 100%);
             color: #ffffff;
             font-family: 'Arial', sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
         }
 
-        .container {
-            max-width: 900px;
+        /* Header Styles */
+        header {
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #00d4ff;
+        }
+
+        nav a:hover::after {
             width: 100%;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Home Page */
+        .home-section {
             text-align: center;
         }
 
-        h1 {
+        .home-section h1 {
             margin-bottom: 30px;
             font-size: 2.5em;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.8));
+            }
         }
 
         .video-container {
             position: relative;
             width: 100%;
+            max-width: 800px;
             padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
-            margin-bottom: 30px;
+            margin: 2rem auto;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         .video-container iframe {
@@ -55,39 +183,299 @@
             border: none;
         }
 
-        p {
+        .home-section p {
             font-size: 1.1em;
             margin-bottom: 20px;
             color: #cccccc;
         }
 
-        .footer {
-            margin-top: 40px;
-            padding-top: 20px;
+        /* Portfolio Grid */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .portfolio-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 153, 255, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .portfolio-card:hover::before {
+            left: 100%;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+            border-color: rgba(0, 212, 255, 0.6);
+        }
+
+        .portfolio-card h3 {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-size: 1.3em;
+            position: relative;
+            z-index: 1;
+        }
+
+        .portfolio-card p {
+            color: #aaaaaa;
+            font-size: 0.95em;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        .portfolio-card .tech {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tech-tag {
+            background: rgba(0, 212, 255, 0.2);
+            color: #00d4ff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8em;
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover {
+            background: rgba(0, 212, 255, 0.4);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        /* About Page */
+        .about-content {
+            max-width: 800px;
+        }
+
+        .about-content h2 {
+            font-size: 2em;
+            margin-bottom: 1.5rem;
+            color: #00d4ff;
+        }
+
+        .about-content p {
+            font-size: 1.05em;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: #cccccc;
+        }
+
+        .skills-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill-item {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            color: #00d4ff;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            background: rgba(0, 212, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            padding: 2rem;
             border-top: 1px solid #333333;
+            text-align: center;
             color: #666666;
             font-size: 0.9em;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                gap: 1rem;
+            }
+
+            .home-section h1 {
+                font-size: 2em;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Los Recomendados</h1>
-        
-        <div class="video-container">
-            <iframe 
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                title="YouTube video player" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                allowfullscreen>
-            </iframe>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo" onclick="navigateTo('home'); return false;">Los Recomendados</a>
+            <nav>
+                <a href="#" onclick="navigateTo('home'); return false;">Home</a>
+                <a href="#" onclick="navigateTo('portfolio'); return false;">Portfolio</a>
+                <a href="#" onclick="navigateTo('about'); return false;">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Home Page -->
+        <div id="home" class="page active home-section">
+            <h1>Los Recomendados</h1>
+            
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                    title="YouTube video player" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <p>Welcome to my profile! Check out my portfolio and learn more about me.</p>
         </div>
 
-        <p>Welcome to my profile! This is a YouTube video embedded in a black background site.</p>
-        
-        <div class="footer">
-            <p>&copy; 2024 Los Recomendados. All rights reserved.</p>
+        <!-- Portfolio Page -->
+        <div id="portfolio" class="page">
+            <h2 style="font-size: 2.5em; margin-bottom: 2rem; background: linear-gradient(135deg, #00d4ff, #0099ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Portfolio</h2>
+            
+            <div class="portfolio-grid">
+                <div class="portfolio-card">
+                    <h3>Project One</h3>
+                    <p>An amazing project showcasing modern web design and responsive layouts with smooth animations and transitions.</p>
+                    <div class="tech">
+                        <span class="tech-tag">HTML</span>
+                        <span class="tech-tag">CSS</span>
+                        <span class="tech-tag">JavaScript</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <h3>Project Two</h3>
+                    <p>A full-stack application built with cutting-edge technologies for optimal performance and user experience.</p>
+                    <div class="tech">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">MongoDB</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <h3>Project Three</h3>
+                    <p>Innovative solution designed to solve real-world problems with elegant code and intuitive design patterns.</p>
+                    <div class="tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Flask</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <h3>Project Four</h3>
+                    <p>A mobile-first project with seamless cross-platform compatibility and exceptional user interface design.</p>
+                    <div class="tech">
+                        <span class="tech-tag">React Native</span>
+                        <span class="tech-tag">Firebase</span>
+                        <span class="tech-tag">Redux</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <h3>Project Five</h3>
+                    <p>Advanced data visualization platform built with modern tools and techniques for real-time analytics.</p>
+                    <div class="tech">
+                        <span class="tech-tag">D3.js</span>
+                        <span class="tech-tag">Vue.js</span>
+                        <span class="tech-tag">APIs</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-card">
+                    <h3>Project Six</h3>
+                    <p>Enterprise-level application focusing on scalability, security, and performance optimization.</p>
+                    <div class="tech">
+                        <span class="tech-tag">TypeScript</span>
+                        <span class="tech-tag">AWS</span>
+                        <span class="tech-tag">Docker</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page">
+            <div class="about-content">
+                <h2>About Me</h2>
+                <p>
+                    Hello! I'm a passionate developer and creator dedicated to building innovative solutions and sharing recommendations with the world. With years of experience in web development, I've worked on various projects that combine technology with creativity.
+                </p>
+                <p>
+                    I believe in continuous learning and staying updated with the latest technologies and best practices. My goal is to create meaningful experiences through code and design.
+                </p>
+                <h3 style="color: #00d4ff; margin-top: 2rem; margin-bottom: 1rem; font-size: 1.5em;">Skills & Technologies</h3>
+                <div class="skills-list">
+                    <div class="skill-item">Web Development</div>
+                    <div class="skill-item">Frontend Design</div>
+                    <div class="skill-item">Backend Development</div>
+                    <div class="skill-item">Mobile Apps</div>
+                    <div class="skill-item">UI/UX Design</div>
+                    <div class="skill-item">DevOps</div>
+                    <div class="skill-item">Cloud Services</div>
+                    <div class="skill-item">Database Design</div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Los Recomendados. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function navigateTo(page) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(page).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+    </script>
 </body>
 </html>
